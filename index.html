@@ -324,7 +324,7 @@
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
       gap: 28px;
       max-width: 1200px;
       margin: 0 auto;
@@ -515,17 +515,6 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow-lg);
     }
-    .sobre-img-float {
-      position: absolute;
-      bottom: -28px;
-      left: -28px;
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: var(--radius);
-      border: 4px solid var(--brown-dark);
-      box-shadow: var(--shadow);
-    }
     .sobre-badge {
       position: absolute;
       top: 24px;
@@ -552,7 +541,6 @@
     @media (max-width: 900px) {
       .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
       .sobre-visual { padding-bottom: 40px; }
-      .sobre-img-float { left: 16px; }
       .sobre-badge { right: 16px; }
     }
 
@@ -630,8 +618,24 @@
       font-size: .7rem;
     }
 
+    .mvv-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(254,244,227,.12);
+    }
+    .mvv-col {
+      padding: 40px;
+      border-right: 1px solid rgba(254,244,227,.12);
+    }
+    .mvv-col:first-child { padding-left: 0; }
+    .mvv-col-last { padding-right: 0; border-right: none; }
+
     @media (max-width: 768px) {
-      .mvv-grid { grid-template-columns: 1fr; }
+      .mvv-columns { grid-template-columns: 1fr; }
+      .mvv-col { padding: 32px 0; border-right: none; border-bottom: 1px solid rgba(254,244,227,.12); }
+      .mvv-col:first-child { padding-left: 0; }
+      .mvv-col-last { padding-right: 0; border-bottom: none; }
     }
 
     /* ─── GALERIA ─── */
@@ -678,6 +682,7 @@
       #galeria {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 200px 200px 200px;
+        grid-auto-rows: 200px;
       }
       .galeria-item:first-child {
         grid-row: 1 / 2;
@@ -1241,7 +1246,6 @@
       </div>
       <div class="sobre-visual fade-up">
         <img class="sobre-img-main" src="./public/images/yasmim.png" alt="Yasmim Américo - Fundadora Americookies">
-        <img class="sobre-img-float" src="./public/images/site-img-2.png" alt="Cookie Pistache Americookies">
       </div>
     </div>
   </section>
@@ -1250,19 +1254,19 @@
   <section id="mvv" style="background: var(--brown-dark); padding: 80px 5%;">
     <div style="max-width:1100px; margin:0 auto;">
       <h2 class="section-title" style="color:var(--cream); margin-bottom:56px; font-size:clamp(1.5rem,3vw,2.2rem); font-weight:400; letter-spacing:.01em;">Nossa essência</h2>
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid rgba(254,244,227,.12);">
+      <div class="mvv-columns">
 
-        <div style="padding:40px 40px 40px 0; border-right:1px solid rgba(254,244,227,.12);">
+        <div class="mvv-col">
           <p style="font-size:.7rem; font-weight:900; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:20px;">Missão</p>
           <p style="font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--cream); line-height:1.6; font-weight:400;">Fazer cookies artesanais que as pessoas amam, com ingredientes selecionados e muito carinho em cada fornada.</p>
         </div>
 
-        <div style="padding:40px 40px 40px 40px; border-right:1px solid rgba(254,244,227,.12);">
+        <div class="mvv-col">
           <p style="font-size:.7rem; font-weight:900; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:20px;">Visão</p>
           <p style="font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--cream); line-height:1.6; font-weight:400;">Ser a marca de cookies mais amada em Piracicaba, e levar esse sabor artesanal cada vez mais longe.</p>
         </div>
 
-        <div style="padding:40px 0 40px 40px;">
+        <div class="mvv-col mvv-col-last">
           <p style="font-size:.7rem; font-weight:900; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:20px;">Valores</p>
           <div style="display:flex; flex-direction:column; gap:14px;">
             <div style="display:flex; gap:12px; align-items:baseline; color:rgba(254,244,227,.75); font-size:.9rem; line-height:1.5;">
