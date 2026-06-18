@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Americookies — Cookies Artesanais de Piracicaba</title>
+  <meta name="description" content="Cookies artesanais feitos com amor por Yasmim Américo. Sabores exclusivos, entrega em Piracicaba. Peça já pelo WhatsApp!">
+  <meta property="og:title" content="Americookies — Cookies Artesanais de Piracicaba">
+  <meta property="og:description" content="Cookies macios por dentro, crocantes por fora. Do forno pra sua casa. Peça agora!">
+  <meta property="og:image" content="./public/images/site-img-1.png">
+  <link rel="icon" href="./public/images/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Lato:wght@300;400;700;900&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brown:       #6f3314;
+      --brown-dark:  #2c1a0e;
+      --brown-mid:   #8b4220;
+      --gold:        #c8923a;
+      --gold-light:  #e8b86d;
+      --cream:       #fef4e3;
+      --cream-mid:   #f5e6c8;
+      --cream-light: #fff8f0;
+      --white:       #ffffff;
+      --wa:          #25d366;
+      --wa-dark:     #128c4a;
+      --radius:      16px;
+      --shadow:      0 8px 40px rgba(44,26,14,.18);
+      --shadow-lg:   0 20px 80px rgba(44,26,14,.28);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream-light);
+      color: var(--brown-dark);
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── NAVBAR ─── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: transparent;
+      transition: background .4s, box-shadow .4s;
+    }
+    #navbar.scrolled {
+      background: rgba(44,26,14,.96);
+      box-shadow: 0 2px 24px rgba(0,0,0,.4);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo img { height: 52px; width: auto; border-radius: 50%; }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--cream);
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-cta {
+      background: var(--wa);
+      color: var(--white) !important;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: 700 !important;
+      font-size: .85rem !important;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: var(--wa-dark) !important; transform: translateY(-1px); }
+
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: var(--cream); border-radius: 2px; transition: all .3s; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #navbar { padding: 0 6%; }
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('./public/images/site-img-1.png') center/cover no-repeat;
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(44,26,14,.85) 0%,
+        rgba(111,51,20,.65) 50%,
+        rgba(44,26,14,.9) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 660px;
+      padding: 140px 5% 100px;
+      animation: fadeUp .9s ease both;
+      text-align: left;
+    }
+    .hero-logo {
+      display: none;
+    }
+    @keyframes pulseGlow {
+      0%,100% { box-shadow: 0 0 60px rgba(200,146,58,.3); }
+      50%      { box-shadow: 0 0 90px rgba(200,146,58,.55); }
+    }
+    .hero-eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+      opacity: .9;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6.5vw, 5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(255,248,240,.85);
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 0 36px;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--wa);
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 15px 32px;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(37,211,102,.3);
+      transition: all .2s;
+    }
+    .btn-primary:hover { background: var(--wa-dark); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,211,102,.5); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--cream);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 4px;
+      border: 1.5px solid rgba(254,244,227,.4);
+      transition: all .2s;
+    }
+    .btn-secondary:hover { background: rgba(254,244,227,.1); border-color: var(--cream); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,248,240,.5);
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      animation: bounce 2s ease infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+    .hero-scroll svg { opacity: .6; }
+
+    /* ─── MARQUEE STRIP ─── */
+    .marquee-strip {
+      background: var(--brown);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 20s linear infinite;
+    }
+    .marquee-inner span {
+      display: inline-block;
+      color: var(--cream);
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: 0 36px;
+    }
+    .marquee-inner span.dot {
+      color: var(--gold);
+      padding: 0;
+      font-size: 1.2rem;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 80px 5%; }
+    .section-tag {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 900;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.8vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.8;
+      max-width: 560px;
+      opacity: .8;
+    }
+
+    /* ─── CARDÁPIO ─── */
+    #cardapio {
+      background: var(--cream-light);
+    }
+    .cardapio-header {
+      text-align: left;
+      margin-bottom: 48px;
+      max-width: 600px;
+    }
+    .cardapio-header .section-sub { margin: 0; }
+
+    .tabs {
+      display: flex;
+      justify-content: flex-start;
+      gap: 8px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 2px solid var(--cream-mid);
+      color: var(--brown);
+      font-family: 'Lato', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 9px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--brown);
+      border-color: var(--brown);
+      color: var(--cream);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .menu-card {
+      background: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .3s, box-shadow .3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .menu-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+
+    .card-img {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+    .menu-card:hover .card-img img { transform: scale(1.07); }
+    .card-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--gold);
+      color: var(--white);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 3px;
+    }
+    .card-badge.new { background: var(--brown); }
+
+    .card-body {
+      padding: 22px 24px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--brown-dark);
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: .9rem;
+      color: #6b5040;
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 18px;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--brown);
+    }
+    .card-price span {
+      display: none;
+    }
+    .card-order {
+      background: var(--brown);
+      color: var(--cream);
+      border: none;
+      font-family: 'Lato', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s;
+      text-decoration: none;
+    }
+    .card-order:hover { background: var(--gold); color: var(--white); transform: scale(1.03); }
+
+    .combo-banner {
+      background: linear-gradient(135deg, var(--brown) 0%, var(--brown-mid) 100%);
+      border-radius: 8px;
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      max-width: 1200px;
+      margin: 40px auto 0;
+      flex-wrap: wrap;
+    }
+    .combo-text .label {
+      color: var(--gold-light);
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .combo-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .combo-text p { color: rgba(254,244,227,.75); font-size: .95rem; }
+    .combo-cta {
+      background: var(--wa);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 32px;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    .combo-cta:hover { background: var(--wa-dark); transform: translateY(-2px); }
+
+    /* ─── SOBRE NÓS ─── */
+    #sobre {
+      background: var(--brown-dark);
+      color: var(--cream);
+    }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .sobre-text .section-title { color: var(--white); }
+    .sobre-text .section-sub { color: rgba(254,244,227,.75); max-width: 100%; margin-bottom: 24px; }
+    .sobre-text p { color: rgba(254,244,227,.7); font-size: .98rem; line-height: 1.9; margin-bottom: 16px; }
+    .founder-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(200,146,58,.25);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-top: 32px;
+    }
+    .founder-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .founder-info strong { display: block; color: var(--white); font-size: 1rem; margin-bottom: 2px; }
+    .founder-info span { color: var(--gold-light); font-size: .85rem; }
+
+    .sobre-visual {
+      position: relative;
+    }
+    .sobre-img-main {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+    }
+    .sobre-img-float {
+      position: absolute;
+      bottom: -28px;
+      left: -28px;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      border: 4px solid var(--brown-dark);
+      box-shadow: var(--shadow);
+    }
+    .sobre-badge {
+      position: absolute;
+      top: 24px;
+      right: -20px;
+      background: var(--gold);
+      color: var(--white);
+      border-radius: 50%;
+      width: 96px;
+      height: 96px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      line-height: 1.3;
+      box-shadow: 0 8px 24px rgba(200,146,58,.4);
+    }
+    .sobre-badge strong { font-family: 'Playfair Display', serif; font-size: 1.5rem; display: block; letter-spacing: 0; }
+
+    @media (max-width: 900px) {
+      .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
+      .sobre-visual { padding-bottom: 40px; }
+      .sobre-img-float { left: 16px; }
+      .sobre-badge { right: 16px; }
+    }
+
+    /* ─── MVV ─── */
+    #mvv {
+      background: var(--cream);
+    }
+    .mvv-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .mvv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .mvv-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(44,26,14,.08);
+      border-top: 4px solid var(--brown);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .mvv-card:nth-child(2) { border-top-color: var(--gold); }
+    .mvv-card:nth-child(3) { border-top-color: var(--brown-mid); }
+    .mvv-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .mvv-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--cream);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+    }
+    .mvv-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--brown-dark);
+      margin-bottom: 14px;
+    }
+    .mvv-card p {
+      font-size: .93rem;
+      line-height: 1.8;
+      color: #6b5040;
+    }
+    .values-list {
+      list-style: none;
+      margin-top: 12px;
+      text-align: left;
+    }
+    .values-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--cream-mid);
+      font-size: .88rem;
+      color: #6b5040;
+      line-height: 1.5;
+    }
+    .values-list li:last-child { border: none; }
+    .values-list li::before {
+      content: '✦';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: .7rem;
+    }
+
+    @media (max-width: 768px) {
+      .mvv-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── GALERIA ─── */
+    #galeria {
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 300px 300px;
+    }
+    .galeria-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .galeria-item:first-child {
+      grid-row: 1 / 3;
+      grid-column: 1 / 2;
+    }
+    .galeria-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+    .galeria-item:hover img { transform: scale(1.07); }
+    .galeria-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44,26,14,.7) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+    .galeria-item:hover .galeria-overlay { opacity: 1; }
+    .galeria-overlay span {
+      color: var(--white);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      #galeria {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 200px 200px 200px;
+      }
+      .galeria-item:first-child {
+        grid-row: 1 / 2;
+        grid-column: 1 / 3;
+        height: 200px;
+      }
+    }
+
+    /* ─── CTA FINAL ─── */
+    #cta-final {
+      background: url('./public/images/about-bg.jpg') center/cover no-repeat;
+      position: relative;
+      text-align: center;
+      padding: 120px 5%;
+    }
+    #cta-final::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(44,26,14,.92) 0%, rgba(111,51,20,.85) 100%);
+    }
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .cta-content .section-tag { color: var(--gold-light); }
+    .cta-content .section-title { color: var(--white); margin-bottom: 20px; }
+    .cta-content p { color: rgba(254,244,227,.8); font-size: 1.05rem; line-height: 1.8; margin-bottom: 40px; }
+    .cta-big {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--wa);
+      color: var(--white);
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 18px 44px;
+      border-radius: 4px;
+      box-shadow: 0 8px 28px rgba(37,211,102,.35);
+      transition: all .25s;
+    }
+    .cta-big:hover { background: var(--wa-dark); transform: translateY(-3px); box-shadow: 0 18px 50px rgba(37,211,102,.55); }
+    .cta-info {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .cta-info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(254,244,227,.7);
+      font-size: .9rem;
+    }
+    .cta-info-item svg { color: var(--gold-light); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--brown-dark);
+      color: rgba(254,244,227,.6);
+      padding: 60px 5% 40px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto 48px;
+    }
+    .footer-brand img { height: 80px; border-radius: 50%; margin-bottom: 16px; }
+    .footer-brand p { font-size: .9rem; line-height: 1.8; margin-bottom: 20px; max-width: 280px; }
+    .social-links { display: flex; gap: 12px; }
+    .social-link {
+      width: 40px;
+      height: 40px;
+      background: rgba(254,244,227,.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+    .social-link:hover { background: var(--gold); }
+    .social-link svg { color: var(--cream); }
+
+    footer h4 {
+      color: var(--cream);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { color: rgba(254,244,227,.6); font-size: .9rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-contact { display: flex; flex-direction: column; gap: 14px; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 12px; font-size: .9rem; line-height: 1.6; }
+    .footer-contact-item svg { flex-shrink: 0; color: var(--gold); margin-top: 2px; }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(254,244,227,.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 12px;
+      font-size: .82rem;
+    }
+    .footer-bottom a { color: var(--gold-light); }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      background: var(--wa);
+      color: var(--white);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,.5);
+      transition: transform .2s, box-shadow .2s;
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+    .wa-float:hover { transform: scale(1.12); box-shadow: 0 10px 32px rgba(37,211,102,.65); }
+    @keyframes waPulse {
+      0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,.5); }
+      50%      { box-shadow: 0 6px 40px rgba(37,211,102,.75); }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-img-placeholder {
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .placeholder-emoji {
+      font-size: 4rem;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,.3));
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 72px 5%; }
+      .hero-content { padding: 100px 20px 60px; }
+      .combo-banner { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      <img src="./public/images/logo.png" alt="Americookies Logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#cardapio">Cardápio</a></li>
+      <li><a href="#sobre">Nossa História</a></li>
+      <li><a href="#galeria" style="display:flex;align-items:center;gap:6px">Galeria</a></li>
+      <li>
+        <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20fazer%20um%20pedido%20🍪" class="nav-cta" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Peça Agora
+        </a>
+      </li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img class="hero-logo" src="./public/images/logo.png" alt="Americookies">
+      <p class="hero-eyebrow">Piracicaba · SP · Artesanal</p>
+      <h1 class="hero-title">
+        Cookies que vão<br>
+        te fazer pedir<br>
+        <em>de novo.</em>
+      </h1>
+      <p class="hero-subtitle">
+        Feitos na hora, com ingredientes frescos. Entrega em Piracicaba e região.
+      </p>
+      <div class="hero-btns">
+        <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20fazer%20um%20pedido%20🍪" class="btn-primary" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Peça pelo WhatsApp
+        </a>
+        <a href="#cardapio" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Ver Cardápio
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner" id="marqueeInner">
+      <span>Feito com Amor</span><span class="dot">✦</span>
+      <span>Entrega em Piracicaba</span><span class="dot">✦</span>
+      <span>Ingredientes Selecionados</span><span class="dot">✦</span>
+      <span>Red Velvet</span><span class="dot">✦</span>
+      <span>Pistache</span><span class="dot">✦</span>
+      <span>Chocolate</span><span class="dot">✦</span>
+      <span>Do Forno Pra Sua Casa</span><span class="dot">✦</span>
+      <span>Americookies</span><span class="dot">✦</span>
+      <span>Feito com Amor</span><span class="dot">✦</span>
+      <span>Entrega em Piracicaba</span><span class="dot">✦</span>
+      <span>Ingredientes Selecionados</span><span class="dot">✦</span>
+      <span>Red Velvet</span><span class="dot">✦</span>
+      <span>Pistache</span><span class="dot">✦</span>
+      <span>Chocolate</span><span class="dot">✦</span>
+      <span>Do Forno Pra Sua Casa</span><span class="dot">✦</span>
+      <span>Americookies</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <!-- CARDÁPIO -->
+  <section id="cardapio">
+    <div class="cardapio-header fade-up">
+      <h2 class="section-title">Escolha o seu favorito</h2>
+      <p class="section-sub">Assados no momento do pedido. Ingredientes frescos, sabor de verdade.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="filterMenu('todos', this)">Todos</button>
+      <button class="tab-btn" onclick="filterMenu('tradicional', this)">Tradicionais — R$ 8</button>
+      <button class="tab-btn" onclick="filterMenu('recheado', this)">Recheados — R$ 16</button>
+      <button class="tab-btn" onclick="filterMenu('combo', this)">Caixas & Combos</button>
+    </div>
+
+    <div class="menu-grid">
+
+      <!-- TRADICIONAIS -->
+
+      <!-- Nutella -->
+      <div class="menu-card fade-up" data-category="tradicional">
+        <div class="card-img">
+          <img src="./public/images/cookie-nutella.png" alt="Cookie Nutella" loading="lazy">
+          <div class="card-badge">Tradicional</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Nutella</h3>
+          <p class="card-desc">Massa dourada, recheio generoso de Nutella. Macio por dentro, crocante por fora.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>tradicional</span>
+              R$ 8,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20cookie%20de%20Nutella%20🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ninho e Nutella -->
+      <div class="menu-card fade-up" data-category="tradicional">
+        <div class="card-img">
+          <img src="./public/images/cookie-ninho-nutella.png" alt="Cookie Ninho e Nutella" loading="lazy">
+          <div class="card-badge">🔥 Mais Pedido</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Ninho e Nutella</h3>
+          <p class="card-desc">Massa cremosa de leite Ninho com veios de Nutella. Doce, perfumado e viciante.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>tradicional</span>
+              R$ 8,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20cookie%20de%20Ninho%20e%20Nutella%20🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pistache -->
+      <div class="menu-card fade-up" data-category="tradicional">
+        <div class="card-img">
+          <img src="./public/images/cookie-pistache.png" alt="Cookie Pistache" loading="lazy">
+          <div class="card-badge">Tradicional</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Pistache</h3>
+          <p class="card-desc">Massa dourada com pistache tostado e creme artesanal de pistache. Sofisticado e delicado.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>tradicional</span>
+              R$ 8,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20cookie%20de%20Pistache%20🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Limão Siciliano -->
+      <div class="menu-card fade-up" data-category="tradicional">
+        <div class="card-img">
+          <img src="./public/images/cookie-limao-siciliano.png" alt="Cookie Limão Siciliano" loading="lazy">
+          <div class="card-badge">Tradicional</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Limão Siciliano</h3>
+          <p class="card-desc">Raspas de limão siciliano na massa e ganache ácida. Leve, diferente, surpreendente.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>tradicional</span>
+              R$ 8,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20cookie%20de%20Limão%20Siciliano%20🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECHEADOS -->
+
+      <!-- Doce de Leite com Nozes -->
+      <div class="menu-card fade-up" data-category="recheado">
+        <div class="card-img">
+          <img src="./public/images/cookie-doce-leite-nozes.png" alt="Cookie Doce de Leite com Nozes" loading="lazy">
+          <div class="card-badge new">Recheado ✨</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Doce de Leite com Nozes Caramelizadas</h3>
+          <p class="card-desc">Recheado com doce de leite cremoso e nozes caramelizadas. Rico e intenso.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>recheado</span>
+              R$ 16,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20cookie%20de%20Doce%20de%20Leite%20com%20Nozes%20🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bueno -->
+      <div class="menu-card fade-up" data-category="recheado">
+        <div class="card-img">
+          <img src="./public/images/cookie-bueno.png" alt="Cookie Bueno" loading="lazy">
+          <div class="card-badge new">Recheado ✨</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Bueno</h3>
+          <p class="card-desc">Massa crocante com creme de avelã e chocolate branco. Para quem ama Bueno.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>recheado</span>
+              R$ 16,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20cookie%20Bueno%20🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Red Velvet -->
+      <div class="menu-card fade-up" data-category="recheado">
+        <div class="card-img">
+          <img src="./public/images/cookie-red-velvet.png" alt="Cookie Red Velvet" loading="lazy">
+          <div class="card-badge new">Recheado ✨</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Red Velvet</h3>
+          <p class="card-desc">Massa aveludada de red velvet com gotas de chocolate branco e cream cheese artesanal.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>recheado</span>
+              R$ 16,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20cookie%20Red%20Velvet%20🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Black -->
+      <div class="menu-card fade-up" data-category="recheado">
+        <div class="card-img">
+          <img src="./public/images/cookie-black.png" alt="Cookie Black" loading="lazy">
+          <div class="card-badge new">Recheado ✨</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Black</h3>
+          <p class="card-desc">Cacau preto com recheio de chocolate 70%. Para quem ama chocolate de verdade.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>recheado</span>
+              R$ 16,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20cookie%20Black%20🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMBOS -->
+
+      <!-- Box 6 mini cookies -->
+      <div class="menu-card fade-up" data-category="combo">
+        <div class="card-img">
+          <img src="./public/images/cookie-box6.png" alt="Box 6 Mini Cookies" loading="lazy">
+          <div class="card-badge" style="background:var(--brown-dark)">🎁 Presente</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Box com 6 Mini Cookies</h3>
+          <p class="card-desc">6 mini cookies para provar vários sabores ou presentear alguém especial. Embalagem caprichada.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>caixa especial</span>
+              R$ 54,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20Box%20com%206%20Mini%20Cookies!%20🎁🍪" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cup Brownie ou Cookie -->
+      <div class="menu-card fade-up" data-category="combo">
+        <div class="card-img">
+          <img src="./public/images/cup-brownie.png" alt="Cup Brownie ou Cookie" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Cup Brownie ou Cookie</h3>
+          <p class="card-desc">Brownie ou cookie no copo, quente e cremoso, com calda. Come na hora ou leva pra casa.</p>
+          <div class="card-footer">
+            <div class="card-price">
+              <span>experiência</span>
+              R$ 18,00
+            </div>
+            <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20pedir%20o%20Cup%20Brownie%20ou%20Cookie!%20🥤🍫" class="card-order" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Combo Banner -->
+    <div class="combo-banner fade-up">
+      <div class="combo-text">
+        <p class="label">🎁 Promoção Especial</p>
+        <h3>Presente de Cookie? A gente personaliza!</h3>
+        <p>Embalagem especial + cartão escrito à mão + entrega com carinho. Para datas especiais, aniversários e para qualquer ocasião.</p>
+      </div>
+      <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20montar%20um%20presente%20personalizado%20de%20cookies!%20🎁🍪" class="combo-cta" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Personalizar Presente
+      </a>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <div id="galeria">
+    <div class="galeria-item">
+      <img src="./public/images/site-img-3.png" alt="Red Velvet Cookie" loading="lazy">
+      <div class="galeria-overlay"><span>Red Velvet Cream Cheese</span></div>
+    </div>
+    <div class="galeria-item">
+      <img src="./public/images/site-img-2.png" alt="Cookie Pistache" loading="lazy">
+      <div class="galeria-overlay"><span>Pistache Premium</span></div>
+    </div>
+    <div class="galeria-item">
+      <img src="./public/images/site-img-1.png" alt="Cookie Bueno" loading="lazy">
+      <div class="galeria-overlay"><span>Bueno</span></div>
+    </div>
+    <div class="galeria-item">
+      <img src="./public/images/cookie-ninho-nutella.png" alt="Cookie Ninho e Nutella" loading="lazy">
+      <div class="galeria-overlay"><span>Ninho e Nutella</span></div>
+    </div>
+    <div class="galeria-item">
+      <img src="./public/images/cookie-doce-leite-nozes.png" alt="Cookie Doce de Leite" loading="lazy">
+      <div class="galeria-overlay"><span>Doce de Leite com Nozes</span></div>
+    </div>
+    <div class="galeria-item">
+      <img src="./public/images/cookie-black.png" alt="Cookie Black" loading="lazy">
+      <div class="galeria-overlay"><span>Black</span></div>
+    </div>
+    <div class="galeria-item">
+      <img src="./public/images/cup-brownie.png" alt="Cup Brownie" loading="lazy">
+      <div class="galeria-overlay"><span>Cup Brownie</span></div>
+    </div>
+  </div>
+
+  <!-- SOBRE NÓS -->
+  <section id="sobre">
+    <div class="sobre-grid">
+      <div class="sobre-text fade-up">
+        <p class="section-tag">Nossa História</p>
+        <h2 class="section-title">Criado com amor por <em style="font-style:italic; color:var(--gold-light)">Yasmim Américo</em></h2>
+        <p class="section-sub" style="margin-bottom:24px">A história de quem transformou paixão em negócio.</p>
+        <p>Yasmim Américo começou fazendo cookies na própria cozinha, testando combinações até chegar no que você prova hoje: macio por dentro, levemente crocante por fora, e cheio de recheio.</p>
+        <p>O que era hobby virou negócio. Hoje a Americookies atende Piracicaba e região, com cada pedido feito no momento da encomenda — sem estoque, sem freezer, sem compromisso com a qualidade.</p>
+        <p></p>
+        <div class="founder-card">
+          <div class="founder-avatar" style="background:none;padding:0;overflow:hidden;"><img src="./public/images/yasmim.png" alt="Yasmim Américo" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%;"></div>
+          <div class="founder-info">
+            <strong>Yasmim Américo</strong>
+            <span>Fundadora & Head Baker — Americookies</span>
+          </div>
+        </div>
+      </div>
+      <div class="sobre-visual fade-up">
+        <img class="sobre-img-main" src="./public/images/yasmim.png" alt="Yasmim Américo - Fundadora Americookies">
+        <img class="sobre-img-float" src="./public/images/site-img-2.png" alt="Cookie Pistache Americookies">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="cta-final">
+    <div class="cta-content fade-up">
+      <h2 class="section-title">Pronto pra pedir?</h2>
+      <p>WhatsApp direto com a Yasmim. Pedidos sob encomenda em Piracicaba e região.</p>
+      <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20fazer%20um%20pedido%20na%20Americookies%20🍪" class="cta-big" target="_blank">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Fazer Meu Pedido
+      </a>
+      <div class="cta-info">
+        <div class="cta-info-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          Piracicaba e Região
+        </div>
+        <div class="cta-info-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Encomende com antecedência
+        </div>
+        <div class="cta-info-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Feito com amor
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="./public/images/logo.png" alt="Americookies">
+        <p>Cookies artesanais de Piracicaba, feitos na hora com ingredientes selecionados.</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/americookies.s/" class="social-link" target="_blank" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://wa.me/5519998524467" class="social-link" target="_blank" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <ul class="footer-links">
+          <li><a href="#cardapio">Cardápio</a></li>
+          <li><a href="#sobre">Nossa História</a></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="https://www.instagram.com/americookies.s/" target="_blank">Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <div class="footer-contact">
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            (19) 99852-4467
+          </div>
+
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Piracicaba — SP
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Americookies. Todos os direitos reservados.</span>
+      <span>Site criado por <a href="https://aion.zo.computer" target="_blank" style="color:var(--gold-light);text-decoration:none;">AION</a></span>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/5519998524467?text=Olá!%20Quero%20fazer%20um%20pedido%20na%20Americookies%20🍪" class="wa-float" target="_blank" aria-label="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Hero parallax
+    const heroBg = document.getElementById('heroBg');
+    setTimeout(() => heroBg.classList.add('loaded'), 100);
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroBg.style.transform = `scale(1) translateY(${y * 0.3}px)`;
+      }
+    });
+
+    // Intersection Observer for fade-up
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // Menu filter tabs
+    function filterMenu(category, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.menu-card').forEach(card => {
+        const cat = card.dataset.category;
+        if (category === 'todos' || cat === category) {
+          card.style.display = 'flex';
+          card.style.animation = 'fadeUp .4s ease both';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Hamburger menu (mobile)
+    document.getElementById('hamburger').addEventListener('click', () => {
+      const links = document.querySelector('.nav-links');
+      if (links.style.display === 'flex') {
+        links.style.display = 'none';
+      } else {
+        links.style.cssText = `
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          top: 72px; left: 0; right: 0;
+          background: rgba(44,26,14,.97);
+          padding: 24px 6%;
+          gap: 20px;
+          backdrop-filter: blur(8px);
+          z-index: 999;
+        `;
+      }
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        const links = document.querySelector('.nav-links');
+        if (window.innerWidth <= 768) links.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
